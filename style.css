@@ -3,6 +3,7 @@ body{
     justify-content: center;
     align-items: center;
     height:95vh;
+    background-color:#93aa6f;
 }
 
 .gameboard {
