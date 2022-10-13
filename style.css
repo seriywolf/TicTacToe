@@ -14,3 +14,8 @@ body{
   grid-column-gap: 2px;
   grid-row-gap: 2px;
 }
+
+.boardElement{
+    font-size: 4rem;
+    background-color:rgb(184, 183, 183)
+}
