@@ -13,15 +13,15 @@ const gameboard = (() => {
   };
 })();
 
-const player = (mark) => {
+const Player = (mark) => {
   const win = () => {
     console.log(`Player ${mark} win!`);
   };
   return { mark, win };
 };
 
-const xPlayer = player("X");
-const oPlayer = player("0");
+const xPlayer = Player("X");
+const oPlayer = Player("0");
 
 const randomPlayerSelect = () => {
   const players = ["X", "0"];
@@ -30,18 +30,22 @@ const randomPlayerSelect = () => {
 };
 let playerMark = randomPlayerSelect();
 
-const game = (() => {
-  document
+
+document
     .querySelector(".gameboard")
-    .addEventListener("click", function (event) {
-      if (event.target.textContent === "") {
+    .addEventListener("click", (event) =>{
+      if (event.target.textContent === ""){
+        game(event);
+      };      
+    });
+
+
+const game = ((event) => {      
         if (playerMark === "X") {
           playerMark = "0";
         } else if (playerMark === "0") {
           playerMark = "X";
         }
         gameboard.arr[+event.target.classList[1]] = playerMark;
-        gameboard.render(gameboard.arr);
-      }
-    });
-})();
+        gameboard.render(gameboard.arr);   
+});
