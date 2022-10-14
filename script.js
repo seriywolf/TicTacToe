@@ -1,17 +1,36 @@
-const gameboard = (() => {
-  //let arr = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'x', 'x'];
+const gameboard = (() => {  
   let arr = new Array(9);
-  const render = (arr) => {
+
+  const render = () => {
     let elements = document.querySelectorAll(".boardElement");
     elements.forEach(function (element, currentIndex) {
-      element.textContent = arr[currentIndex];
+      element.textContent = getArray()[currentIndex];
     });
   };
-  return {
-    arr,
+
+  const restart = () => {
+    arr = new Array(9);
+    render();
+  };  
+
+  const getArray = () =>{
+    return arr;
+  };
+
+  const setArrayElement = (element, value) => {
+    arr[element] = value;
+    gameboard.render();
+  };
+
+  return {    
     render,
+    restart,
+    getArray,
+    setArrayElement
   };
 })();
+
+
 
 const Player = (mark) => {
   const win = () => {
@@ -36,6 +55,7 @@ document
     .addEventListener("click", (event) =>{
       if (event.target.textContent === ""){
         game(event);
+        console.log(event);
       };      
     });
 
@@ -46,6 +66,12 @@ const game = ((event) => {
         } else if (playerMark === "0") {
           playerMark = "X";
         }
-        gameboard.arr[+event.target.classList[1]] = playerMark;
-        gameboard.render(gameboard.arr);   
+        gameboard.setArrayElement([+event.target.classList[1]], playerMark);          
 });
+
+
+document
+    .querySelector("#restart")
+    .addEventListener("click", () =>{
+      gameboard.restart();
+    });
