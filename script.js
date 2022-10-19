@@ -94,7 +94,9 @@ const game = (() => {
       array.every((element) => player.getArray().includes(element))
     );
   };
-  const gameOver = (player) => console.log("Player " + player.sign + " win");
+  const gameOver = (player) =>{
+    document.querySelector(".message").textContent = `Player ${player.sign} win!!!` 
+  }  ;
 })();
 
 document.querySelector("#restart").addEventListener("click", () => {
