@@ -25,7 +25,6 @@ const gameboard = (() => {
   };
 })();
 
-
 const Player = (sign) => {
   this.sign = sign;
   let array = [];
@@ -34,14 +33,13 @@ const Player = (sign) => {
   };
   setArray = (value) => {
     array.push(value);
-  }
+  };
   return {
     getArray,
     sign,
-    setArray
+    setArray,
   };
 };
-
 
 const playerX = Player("X");
 const player0 = Player("0");
@@ -79,30 +77,25 @@ const winConditions = [
   [2, 4, 6],
 ];
 
-
 const game = (() => {
   document.querySelector(".gameboard").addEventListener("click", (event) => {
     if (event.target.textContent === "") {
       let player = GetPlayer.playerSelect();
       gameboard.setArrayElement([+event.target.classList[1]], player.sign);
       player.setArray(+event.target.classList[1]);
-      if (checkWinConditions(player)){
+      if (checkWinConditions(player)) {
         gameOver(player);
-      };
-    };
+      }
+    }
   });
   const checkWinConditions = (player) => {
-    console.log(player.sign + " " + player.getArray())  ;
+    console.log(player.sign + " " + player.getArray());
     return winConditions.some((array) =>
       array.every((element) => player.getArray().includes(element))
     );
   };
+  const gameOver = (player) => console.log("Player " + player.sign + " win");
 })();
-
-
-
-
-const gameOver = player => (console.log("Player " + player.sign + " win"))
 
 document.querySelector("#restart").addEventListener("click", () => {
   gameboard.restart();
