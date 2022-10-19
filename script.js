@@ -1,14 +1,3 @@
-const winConditions = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
-
 const gameboard = (() => {
   let arr = new Array(9);
   const render = () => {
@@ -36,29 +25,34 @@ const gameboard = (() => {
   };
 })();
 
-
 const Player = (sign) => {
   this.sign = sign;
-  array = [];
+  let array = [];
+  getArray = () => {
+    return array;
+  };
+  setArray = (value) => {
+    array.push(value);
+  }
   return {
-    array,
-    sign    
+    getArray,
+    sign,
+    setArray
   };
 };
 
+const playerX = Player("X");
+const player0 = Player("0");
 
 const GetPlayer = (() => {
-  const playerX = Player("X");
-  const player0 = Player("0");
+
 
   const randomPlayerSelect = () => {
     const players = [playerX, player0];
     const rand = Math.floor(Math.random() * 2);
     return players[rand];
   };
-
   let player;
-
   const playerSelect = () => {
     if (player === undefined) {
       player = randomPlayerSelect();
@@ -69,39 +63,43 @@ const GetPlayer = (() => {
     }
     return player;
   };
-
   return {
     playerSelect,
   };
 })();
 
-
 const game = (() => {
   document.querySelector(".gameboard").addEventListener("click", (event) => {
     if (event.target.textContent === "") {
-      let player = GetPlayer.playerSelect();      
+      let player = GetPlayer.playerSelect();
       gameboard.setArrayElement([+event.target.classList[1]], player.sign);
-      checkWinConditions(player);
+      player.setArray(+event.target.classList[1]);
+      if (checkWinConditions(player)){
+        gameOver(player);
+      }
     };
   });
 })();
 
-
+const winConditions = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
 const checkWinConditions = (player) => {
-  gameboard.getArray().forEach(function (value, index) {
-    if (value === "X") {
-      playerX.array.push(index);
-    };
-    if (value === "0") {
-      player0.array.push(index);
-    };
-  });
+  console.log(player.sign + " " + player.getArray())  ;
   return winConditions.some((array) =>
-    array.every((element) => playerX.array.includes(element))
+    array.every((element) => player.getArray().includes(element))
   );
 };
 
+const gameOver = player => (console.log("Player " + player.sign + " win"))
 
 document.querySelector("#restart").addEventListener("click", () => {
   gameboard.restart();
