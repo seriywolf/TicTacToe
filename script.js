@@ -14,7 +14,6 @@ const gameboard = (() => {
     render();
     game.setIsGameOver(false);
     message.textContent = "";
-    console.log("Restart Made");
     GetPlayer.resetplayersArrays();
   };
 
@@ -110,14 +109,16 @@ const game = (() => {
       }
     }
   });
+
+  document.querySelector("#restart").addEventListener("click", () => {
+    gameboard.restart();
+  });
   const checkWinConditions = (player) => {
-    console.log(player.sign + " " + player.getArray());
     return winConditions.some((array) =>
       array.every((element) => player.getArray().includes(element))
     );
   };
   let isGameOver;
-
   const setIsGameOver = (value) => {
     isGameOver = value;
   };
@@ -130,7 +131,3 @@ const game = (() => {
   };
   return { getIsGameOver, setIsGameOver };
 })();
-
-document.querySelector("#restart").addEventListener("click", () => {
-  gameboard.restart();
-});
