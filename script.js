@@ -8,7 +8,6 @@ const gameboard = (() => {
       element.textContent = getArray()[currentIndex];
     });
   };
-
   const restart = () => {
     arr = new Array(9);
     render();
@@ -16,16 +15,13 @@ const gameboard = (() => {
     message.textContent = "";
     GetPlayer.resetplayersArrays();
   };
-
   const getArray = () => {
     return arr;
   };
-
   const addToArrayElement = (element, value) => {
     arr[element] = value;
     gameboard.render();
   };
-
   return {
     render,
     restart,
@@ -111,7 +107,7 @@ const game = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  
+
   document.querySelector("#restart").addEventListener("click", () => {
     gameboard.restart();
   });
