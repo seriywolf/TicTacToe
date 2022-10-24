@@ -12,7 +12,7 @@ const gameboard = (() => {
     arr = new Array(9);
     render();
     game.setIsGameOver(false);
-    message.textContent = "";
+    message.textContent = `Player ${game.player.name} turn`;
     GetPlayer.resetplayersArrays();
   };
   const getArray = () => {
@@ -30,8 +30,8 @@ const gameboard = (() => {
   };
 })();
 
-const Player = (sign,name) => {
-  this.sign = sign;  
+const Player = (sign, name) => {
+  this.sign = sign;
   let array = [];
   getArray = () => {
     return array;
@@ -47,7 +47,7 @@ const Player = (sign,name) => {
     sign,
     addToArray,
     clearArray,
-    name
+    name,
   };
 };
 
@@ -80,22 +80,24 @@ const GetPlayer = (() => {
   };
 })();
 
-
-
 const game = (() => {
+  let player = GetPlayer.playerSelect();
+  message.textContent = `Player ${player.name} turn`;
   document.querySelector(".gameboard").addEventListener("click", (event) => {
     if (getIsGameOver()) {
-      gameboard.restart();
+      return;
     } else {
       if (event.target.textContent === "") {
-        let player = GetPlayer.playerSelect();
         gameboard.addToArrayElement([+event.target.classList[1]], player.sign);
         player.addToArray(+event.target.classList[1]);
         if (checkWinConditions(player)) {
           gameOver(player);
-        }
-      }
-    }
+        } else {
+          player = GetPlayer.playerSelect();
+          message.textContent = `Player ${player.name} turn`;
+        };
+      };
+    };
   });
 
   const winConditions = [
@@ -128,5 +130,5 @@ const game = (() => {
     setIsGameOver(true);
     message.textContent = `Player ${player.name} win!!!`;
   };
-  return { getIsGameOver, setIsGameOver };
+  return { getIsGameOver, setIsGameOver, player };
 })();
