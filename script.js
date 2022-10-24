@@ -30,8 +30,8 @@ const gameboard = (() => {
   };
 })();
 
-const Player = (sign) => {
-  this.sign = sign;
+const Player = (sign,name) => {
+  this.sign = sign;  
   let array = [];
   getArray = () => {
     return array;
@@ -47,12 +47,13 @@ const Player = (sign) => {
     sign,
     addToArray,
     clearArray,
+    name
   };
 };
 
 const GetPlayer = (() => {
-  const playerX = Player("X");
-  const player0 = Player("0");
+  const playerX = Player("X", window.prompt("X player name?", "X"));
+  const player0 = Player("0", window.prompt("0 player name?", "0"));
   const randomPlayerSelect = () => {
     const players = [playerX, player0];
     const rand = Math.floor(Math.random() * 2);
@@ -125,7 +126,7 @@ const game = (() => {
   };
   const gameOver = (player) => {
     setIsGameOver(true);
-    message.textContent = `Player ${player.sign} win!!!`;
+    message.textContent = `Player ${player.name} win!!!`;
   };
   return { getIsGameOver, setIsGameOver };
 })();
